@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: local-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: qwe123
+      MYSQL_DATABASE: integ
+      MYSQL_USER: adam
+      MYSQL_PASSWORD: qwe123
+    networks:
+      - app-network
+
+  app:
+    build: .
+    container_name: spring-app
+    ports:
+      - "8021:8021"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/integ
+      SPRING_DATASOURCE_USERNAME: adam
+      SPRING_DATASOURCE_PASSWORD: qwe123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
