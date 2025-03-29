@@ -1,6 +1,8 @@
 package com.sid.springintegration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +21,12 @@ public class MainController {
     }
 
     @PostMapping("/add")
-    public void addMainEntry(@RequestParam String name) {
+    public ResponseEntity<String> addMainEntry(@RequestParam String name) {
         MainEntry entry = MainEntry.builder()
                 .id(UUID.randomUUID().toString())
                 .name(name)
                 .build();
         service.addMainEntry(entry);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Entry added");
     }
 }
