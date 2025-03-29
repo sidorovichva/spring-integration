@@ -11,12 +11,17 @@ services:
       MYSQL_DATABASE: integ
       MYSQL_USER: adam
       MYSQL_PASSWORD: qwe123
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     networks:
       - app-network
 
   app:
     build: .
-    container_name: spring-app
+    container_name: spring-integration-app
     ports:
       - "8021:8021"
     environment:
@@ -27,9 +32,14 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
 
 networks:
   app-network:
+    driver: bridge
+
+volumes:
+  mysql_local:
