@@ -13,18 +13,12 @@ import java.util.UUID;
 @RequestMapping("/main")
 public class MainController {
 
-//    @GetMapping("/getAll")
-//    public List<MainEntry> getAllEntries() {
-//        return serviceFactory.getMainService().getAllEntries();
-//    }
-
     @PostMapping("/add")
     public ResponseEntity<String> addMainEntry(@RequestParam String name) {
         MainEntry entry = MainEntry.builder()
                 .id(UUID.randomUUID().toString())
                 .name(name)
                 .build();
-//        serviceFactory.getMainService().addMainEntry(entry);
         return ResponseEntity.status(HttpStatus.CREATED).body("Entry added");
     }
 }
