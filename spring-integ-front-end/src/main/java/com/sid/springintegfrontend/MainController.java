@@ -1,24 +1,21 @@
 package com.sid.springintegfrontend;
 
+import com.sid.springintegfrontend.clients.SpringIntegBackEndClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/main")
 public class MainController {
 
+    private final SpringIntegBackEndClient client;
+
     @PostMapping("/add")
     public ResponseEntity<String> addMainEntry(@RequestParam String name) {
-        MainEntry entry = MainEntry.builder()
-                .id(UUID.randomUUID().toString())
-                .name(name)
-                .build();
-        return ResponseEntity.status(HttpStatus.CREATED).body("Entry added");
+        String response = client.addMainEntry(name);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
