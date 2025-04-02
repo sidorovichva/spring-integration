@@ -10,7 +10,7 @@ public class OpenFeignMainService implements IMainService {
 
     private final SpringIntegBackEndClient client;
 
-    public String addMainEntry(String name) {
-        return client.addMainEntry(name);
+    public void addMainEntry(String name) {
+        client.addMainEntry(name);
     }
 }
