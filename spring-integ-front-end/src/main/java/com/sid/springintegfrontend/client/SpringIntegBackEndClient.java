@@ -1,4 +1,4 @@
-package com.sid.springintegfrontend.clients;
+package com.sid.springintegfrontend.client;
 
 import com.sid.springintegfrontend.config.FeignConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;
